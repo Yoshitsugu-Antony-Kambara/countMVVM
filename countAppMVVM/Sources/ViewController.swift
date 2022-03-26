@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet var countLabel: UILabel!
     
-    public var num: Int = 0
+    public var num: Int!
     
     let viewModel = ViewModel()
     private let disposeBag = DisposeBag()
@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedPlusButton() {
+        let toInt: String = countLabel.text ?? "0"
+        num = Int(toInt) ?? 0
         viewModel.viewDidLoad.onNext(num)
     }
 

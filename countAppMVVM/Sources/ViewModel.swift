@@ -15,10 +15,10 @@ class ViewModel {
     
     init() {
         let viewDidLoadSubject = PublishSubject<Int>()
-        
         //inputs
         viewDidLoad = viewDidLoadSubject.asObserver()
         //ouputs
+
         countModel = viewDidLoadSubject
             .map { num in
                 let numPlused: Int = num + 1
