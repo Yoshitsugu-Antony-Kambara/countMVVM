@@ -10,19 +10,30 @@ import RxSwift
 
 class ViewModel {
     
-    let viewDidLoad: AnyObserver<Int>
-    let countModel: Observable<Int>
+    let tappedPlusButton: AnyObserver<Int>
+    var countModel: Observable<Int>
+    
+    var vmNum: Int = 0
+    
+    private let disposeBag = DisposeBag()
     
     init() {
-        let viewDidLoadSubject = PublishSubject<Int>()
-        //inputs
-        viewDidLoad = viewDidLoadSubject.asObserver()
-        //ouputs
+        let tappedPlusButtonSubject = PublishSubject<Int>()
+        let countModelSubject = PublishSubject<Int>()
+        
+        tappedPlusButton = tappedPlusButtonSubject.asObserver()
+        countModel = countModelSubject.asObservable()
+        
+        countModel = countModelSubject
+            .map { [weak self] _ in
+                let hoge = self?.vmNum ?? 0
+                self?.vmNum = 1 + hoge
 
-        countModel = viewDidLoadSubject
-            .map { num in
-                let numPlused: Int = num + 1
-                return numPlused
+                return self?.vmNum ?? 0
             }
+    
+        tappedPlusButtonSubject
+            .subscribe(countModelSubject)
+            .disposed(by: disposeBag)
     }
 }
