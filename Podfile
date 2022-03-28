@@ -7,6 +7,8 @@ target 'countAppMVVM' do
 
   # Pods for countAppMVVM
   pod 'RxSwift'
+  pod 'RxCocoa'
+
   target 'countAppMVVMTests' do
     inherit! :search_paths
     # Pods for testing

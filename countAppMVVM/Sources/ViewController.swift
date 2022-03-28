@@ -12,31 +12,25 @@ class ViewController: UIViewController {
 
     @IBOutlet var countLabel: UILabel!
     
-    public var num: Int = 0
-    
     let viewModel = ViewModel()
     private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         bindToViewModel()
     }
     
     @IBAction func tappedPlusButton() {
-        viewModel.viewDidLoad.onNext(num)
+        viewModel.tappedPlusButton.onNext(0)
     }
-
     
     private func bindToViewModel() {
         viewModel.countModel
             .subscribe(onNext: { numPlused in
-                self.num = numPlused
-                self.countLabel.text = String(self.num)
+                self.countLabel.text = String(numPlused)
             })
             .disposed(by: disposeBag)
     }
-
 }
 
